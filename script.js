@@ -5,10 +5,6 @@ const computerOptions = ["rock", "paper", "scissors"];
 const computerSelection =
 	computerOptions[Math.floor(Math.random() * computerOptions.length)];
 
-let playerSelection = prompt(
-	"Please choose your fate... Rock, Paper, Scissors!"
-);
-
 //Validates input and makes case insensitive
 function checkNull() {
 	if (playerSelection == null || playerSelection == "") {
@@ -16,8 +12,17 @@ function checkNull() {
 	} else {
 	}
 }
-checkNull(playerSelection);
-playerSelection = playerSelection.toLowerCase();
+
+function validateInput() {
+	if (
+		playerSelection != "rock" &&
+		playerSelection != "paper" &&
+		playerSelection != "scissors"
+	) {
+		alert("Use a valid choice!");
+	} else {
+	}
+}
 
 //playRound compares values and sets base scores to 0
 let playerScore = 0;
@@ -49,21 +54,34 @@ function playRound() {
 }
 
 //Loop will execute a 5 round game
-for (let i = 0; i < 5; i++) {
-	playRound(playerSelection, computerSelection);
+for (let i = 1; i < 5; i++) {
 	playerSelection = prompt("Please choose your fate... Rock, Paper, Scissors!");
 	checkNull(playerSelection);
 	playerSelection = playerSelection.toLowerCase();
+	validateInput(playerSelection);
 	computerOptions[Math.floor(Math.random() * computerOptions.length)];
+	playRound(playerSelection, computerSelection);
 }
 
 function winner() {
 	if (playerScore > computerScore) {
-		alert("You win the game!");
+		alert(
+			"You win the game! \n Player: " +
+				playerScore +
+				" Computer: " +
+				computerScore
+		);
 	} else if (playerScore < computerScore) {
-		alert("You lose the game!");
+		alert(
+			"You lose the game! \n Player: " +
+				playerScore +
+				" Computer: " +
+				computerScore
+		);
 	} else {
-		alert("Tie game!");
+		alert(
+			"Tie game! \n Player: " + playerScore + " Computer: " + computerScore
+		);
 	}
 }
 
