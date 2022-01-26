@@ -1,0 +1,23 @@
+/*Overall sheet style*/
+body {
+    font-family: 'Caveat', cursive;
+    background-color: black;
+    color: white;
+}
+
+header {
+    font-size: 65px;
+    text-align: center;
+    margin-top: .5em;
+}
+
+button {
+    width: 200px;
+    height: 200px;
+    margin: 1em;
+}
+
+.selections {
+    display: flex;
+    justify-content: center;
+}
