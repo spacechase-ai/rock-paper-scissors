@@ -1,88 +1,81 @@
-// Game script for Rock Paper Scissors
-
 //ComputerPlay generates random value for play
 const computerOptions = ["rock", "paper", "scissors"];
-const computerSelection =
-	computerOptions[Math.floor(Math.random() * computerOptions.length)];
+let computerSelection;
 
-//Validates input and makes case insensitive
-function checkNull() {
-	if (playerSelection == null || playerSelection == "") {
-		alert("Please enter your choice!");
-	} else {
-	}
-}
-
-function validateInput() {
-	if (
-		playerSelection != "rock" &&
-		playerSelection != "paper" &&
-		playerSelection != "scissors"
-	) {
-		alert("Use a valid choice!");
-	} else {
-	}
-}
-
-//playRound compares values and sets base scores to 0
+//Sets base scores and tracks in HTML
 let playerScore = 0;
 let computerScore = 0;
 
-function playRound() {
-	if (playerSelection == computerSelection) {
-		alert("It's a tie!");
-	} else if (playerSelection == "paper" && computerSelection == "rock") {
-		alert("You win! Paper beats rock.");
-		playerScore++;
-	} else if (playerSelection == "rock" && computerSelection == "scissors") {
-		alert("You win! Rock beats scissors.");
-		playerScore++;
-	} else if (playerSelection == "scissors" && computerSelection == "paper") {
-		alert("You win! Scissors beats paper.");
-		playerScore++;
-	} else if (playerSelection == "rock" && computerSelection == "paper") {
-		alert("You lose! Paper beats rock.");
-		computerScore++;
-	} else if (playerSelection == "scissors" && computerSelection == "rock") {
-		alert("You lose! Rock beats scissors.");
-		computerScore++;
-	} else if (playerSelection == "paper" && computerSelection == "scissors") {
-		alert("You win! Paper beats scissors.");
-		computerScore++;
-	} else {
-	}
-}
+const score = document.querySelector(".score");
+score.textContent = `Your Score: ${playerScore} | Enemy's Score: ${computerScore}`;
 
-//Loop will execute a 5 round game
-for (let i = 1; i < 5; i++) {
-	playerSelection = prompt("Please choose your fate... Rock, Paper, Scissors!");
-	checkNull(playerSelection);
-	playerSelection = playerSelection.toLowerCase();
-	validateInput(playerSelection);
-	computerOptions[Math.floor(Math.random() * computerOptions.length)];
-	playRound(playerSelection, computerSelection);
+const resultText = document.querySelector(".result-text");
+resultText.textContent = " ";
+
+const round = document.querySelector(".round");
+let roundCount = 1;
+
+const button = document.querySelectorAll("button");
+button.forEach((button) => {
+  button.addEventListener("click", () => {
+    playerSelection = button.classList.value;
+    computerSelection =
+      computerOptions[Math.floor(Math.random() * computerOptions.length)];
+    playRound(playerSelection, computerSelection);
+    score.textContent = `Your Score: ${playerScore} | Enemy's Score: ${computerScore}`;
+    winner(playerScore, computerScore);
+    roundUpdate(roundCount);
+  });
+});
+
+function playRound() {
+  if (playerSelection == computerSelection) {
+    resultText.textContent = "It's a tie!";
+  } else if (playerSelection == "paper" && computerSelection == "rock") {
+    resultText.textContent = "You win! Paper beats rock.";
+    playerScore++;
+    roundCount++;
+  } else if (playerSelection == "rock" && computerSelection == "scissors") {
+    resultText.textContent = "You win! Rock beats scissors.";
+    playerScore++;
+    roundCount++;
+  } else if (playerSelection == "scissors" && computerSelection == "paper") {
+    resultText.textContent = "You win! Scissors beats paper.";
+    playerScore++;
+    roundCount++;
+  } else if (playerSelection == "rock" && computerSelection == "paper") {
+    resultText.textContent = "You lose! Paper beats rock.";
+    computerScore++;
+    roundCount++;
+  } else if (playerSelection == "scissors" && computerSelection == "rock") {
+    resultText.textContent = "You lose! Rock beats scissors.";
+    computerScore++;
+    roundCount++;
+  } else if (playerSelection == "paper" && computerSelection == "scissors") {
+    resultText.textContent = "You win! Paper beats scissors.";
+    computerScore++;
+    roundCount++;
+  } else {
+  }
 }
 
 function winner() {
-	if (playerScore > computerScore) {
-		alert(
-			"You win the game! \n Player: " +
-				playerScore +
-				" Computer: " +
-				computerScore
-		);
-	} else if (playerScore < computerScore) {
-		alert(
-			"You lose the game! \n Player: " +
-				playerScore +
-				" Computer: " +
-				computerScore
-		);
-	} else {
-		alert(
-			"Tie game! \n Player: " + playerScore + " Computer: " + computerScore
-		);
-	}
+  if (playerScore == 5 && computerScore < 5) {
+    resultText.textContent = "You win!";
+    playerScore = 0;
+    computerScore = 0;
+    roundCount = 0;
+    score.textContent = `Your Score: ${playerScore} | Enemy's Score: ${computerScore}`;
+  } else if (computerScore == 5 && playerScore < 5) {
+    resultText.textContent = "You lose!";
+    playerScore = 0;
+    computerScore = 0;
+    roundCount = 0;
+    score.textContent = `Your Score: ${playerScore} | Enemy's Score: ${computerScore}`;
+  } else {
+  }
 }
 
-winner(playerScore, computerScore);
+function roundUpdate() {
+  round.textContent = `Round: ${roundCount}`;
+}
